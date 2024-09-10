@@ -1,0 +1,579 @@
+{
+  "contractName": "CRPFactory",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_bytecode",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": true,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes4",
+          "name": "sig",
+          "type": "bytes4"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "caller",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "data",
+          "type": "bytes"
+        }
+      ],
+      "name": "LOG_CALL",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "middleware",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "caller",
+          "type": "address"
+        }
+      ],
+      "name": "LOG_MIDDLEWARE",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "vault",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "caller",
+          "type": "address"
+        }
+      ],
+      "name": "LOG_USER_VAULT",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "caller",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pool",
+          "type": "address"
+        }
+      ],
+      "name": "LogNewCrp",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "bytecodes",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "isCrp",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "factoryAddress",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "poolTokenSymbol",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "poolTokenName",
+              "type": "string"
+            },
+            {
+              "internalType": "address[]",
+              "name": "constituentTokens",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint256[]",
+              "name": "tokenBalances",
+              "type": "uint256[]"
+            },
+            {
+              "internalType": "uint256[]",
+              "name": "tokenWeights",
+              "type": "uint256[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "managerFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "redeemFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "issueFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "perfermanceFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum IConfigurableRightsPool.Etypes",
+              "name": "etype",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct IConfigurableRightsPool.PoolParams",
+          "name": "poolParams",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "bool",
+              "name": "canWhitelistLPs",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "canTokenWhiteLists",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct RightsManager.Rights",
+          "name": "rights",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "firstLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "secondLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "thirdLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "fourLevel",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SmartPoolManager.feeParams",
+              "name": "managerFee",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "firstLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "secondLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "thirdLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "fourLevel",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SmartPoolManager.feeParams",
+              "name": "issueFee",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "firstLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "secondLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "thirdLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "fourLevel",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SmartPoolManager.feeParams",
+              "name": "redeemFee",
+              "type": "tuple"
+            },
+            {
+              "components": [
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "firstLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "secondLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "thirdLevel",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "level",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "ratio",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SmartPoolManager.levelParams",
+                  "name": "fourLevel",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SmartPoolManager.feeParams",
+              "name": "perfermanceFee",
+              "type": "tuple"
+            }
+          ],
+          "internalType": "struct SmartPoolManager.KolPoolParams",
+          "name": "kolPoolParams",
+          "type": "tuple"
+        },
+        {
+          "internalType": "address[]",
+          "name": "owners",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "ownerPercentage",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "newCrp",
+      "outputs": [
+        {
+          "internalType": "contract IConfigurableRightsPool",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_bytecodes",
+          "type": "bytes"
+        }
+      ],
+      "name": "setByteCodes",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newVault",
+          "type": "address"
+        }
+      ],
+      "name": "setUserVault",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "userVault",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+}

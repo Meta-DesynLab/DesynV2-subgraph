@@ -1,0 +1,22 @@
+{
+  "name": "desynv2-subgraph",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meta-DesynLab/DesynV2-subgraph.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Meta-DesynLab/DesynV2-subgraph/issues"
+  },
+  "homepage": "https://github.com/Meta-DesynLab/DesynV2-subgraph#readme",
+  "dependencies": {
+    "graph-cli": "^0.0.1"
+  }
+}

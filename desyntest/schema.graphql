@@ -1,0 +1,102 @@
+type LOG_BLABS @entity(immutable: true) {
+  id: Bytes!
+  caller: Bytes! # address
+  blabs: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_DEL_WHITELIST @entity(immutable: true) {
+  id: Bytes!
+  spender: Bytes! # address
+  sort: BigInt! # uint256
+  caller: Bytes! # address
+  token: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_MANAGER @entity(immutable: true) {
+  id: Bytes!
+  manager: Bytes! # address
+  caller: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_NEW_POOL @entity(immutable: true) {
+  id: Bytes!
+  caller: Bytes! # address
+  pool: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_ORACLE @entity(immutable: true) {
+  id: Bytes!
+  caller: Bytes! # address
+  oracle: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_ROUTER @entity(immutable: true) {
+  id: Bytes!
+  caller: Bytes! # address
+  router: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_USER_VAULT @entity(immutable: true) {
+  id: Bytes!
+  vault: Bytes! # address
+  caller: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_VAULT @entity(immutable: true) {
+  id: Bytes!
+  vault: Bytes! # address
+  caller: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LOG_WHITELIST @entity(immutable: true) {
+  id: Bytes!
+  spender: Bytes! # address
+  sort: BigInt! # uint256
+  caller: Bytes! # address
+  token: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MODULE_STATUS_CHANGE @entity(immutable: true) {
+  id: Bytes!
+  etf: Bytes! # address
+  module: Bytes! # address
+  status: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PAUSED_STATUS @entity(immutable: true) {
+  id: Bytes!
+  state: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
