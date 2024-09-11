@@ -4,19 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Meta-DesynLab/DesynV2-subgraph.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Meta-DesynLab/DesynV2-subgraph/issues"
-  },
-  "homepage": "https://github.com/Meta-DesynLab/DesynV2-subgraph#readme",
-  "dependencies": {
-    "graph-cli": "^0.0.1"
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.67.2",
+    "@graphprotocol/graph-ts": "^0.31.0",
+    "assemblyscript": "^0.19.0",
+    "matchstick-as": "^0.5.2",
+    "typescript": "^4.9.4"
   }
 }

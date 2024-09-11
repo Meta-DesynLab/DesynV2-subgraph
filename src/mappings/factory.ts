@@ -45,7 +45,13 @@ export function handleNewPool(event: LOG_NEW_POOL): void {
     let crp = ConfigurableRightsPool.bind(event.params.caller)
     pool.symbol = getCrpSymbol(crp)
     pool.name = getCrpName(crp)
-    pool.crpController = Address.fromString(getCrpController(crp))
+    let crpCon = getCrpController(crp)
+    if(crpCon === null) {
+      pool.crpController = Address.fromString('')
+    }else{
+      pool.crpController = Address.fromString(crpCon)
+    }
+   
     pool.rights = getCrpRights(crp)
     pool.upperCap = getUpperCap(crp)
     pool.floorCap = getFloorCap(crp)

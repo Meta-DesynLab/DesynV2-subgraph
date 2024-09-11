@@ -83,10 +83,13 @@ export function createExcuteListEntity(hash: string, poolId: string ):void {
   excuteList.save()
 }
 
-export function createInvestListEntity(id: string, pool: string, address: string): void {
+export function createInvestListEntity(id: string, pool: string | null, address: string): void {
   let list =  new InvestorList(id);
-
-  list.poolId = pool;
+  if(pool == null) {
+    list.poolId == ''
+  }else{
+    list.poolId == pool;
+  }
   list.address = address;
   list.save()
 }
@@ -139,6 +142,9 @@ export function createPoolTokenEntity(id: string, pool: string, address: string)
 
 export function updatePoolLiquidity(id: string): void {
   let pool = Pool.load(id)
+
+  if(pool == null) return
+
   let tokensList: Array<Bytes> = pool.tokensList
   let tokensOriginalList: Array<Bytes> = pool.tokensList
 
@@ -161,6 +167,9 @@ export function updatePoolLiquidity(id: string): void {
     if (wethTokenPrice !== null) {
       let poolTokenId = id.concat('-').concat(WETH)
       let poolToken = PoolToken.load(poolTokenId)
+
+      if(poolToken == null) return
+
       poolLiquidity = wethTokenPrice.price.times(poolToken.balance).div(poolToken.denormWeight).times(pool.totalWeight)
       hasPrice = true
     }
@@ -169,6 +178,9 @@ export function updatePoolLiquidity(id: string): void {
     if (daiTokenPrice !== null) {
       let poolTokenId = id.concat('-').concat(DAI)
       let poolToken = PoolToken.load(poolTokenId)
+
+      if(poolToken == null) return
+
       poolLiquidity = daiTokenPrice.price.times(poolToken.balance).div(poolToken.denormWeight).times(pool.totalWeight)
       hasPrice = true
     }
@@ -188,27 +200,28 @@ export function updatePoolLiquidity(id: string): void {
 
       let poolTokenId = id.concat('-').concat(tokenPriceId)
       let poolToken = PoolToken.load(poolTokenId)
+      if(poolToken != null){
+        if (
+          pool.active && !pool.crp && pool.tokensCount.notEqual(BigInt.fromI32(0)) && pool.publicSwap &&
+          (tokenPrice.poolTokenId == poolTokenId || poolLiquidity.gt(tokenPrice.poolLiquidity)) &&
+          (
+            (tokenPriceId != WETH.toString() && tokenPriceId != DAI.toString()) ||
+            (pool.tokensCount.equals(BigInt.fromI32(2)) && hasUsdPrice)
+          )
+        ) {
+          tokenPrice.price = ZERO_BD
 
-      if (
-        pool.active && !pool.crp && pool.tokensCount.notEqual(BigInt.fromI32(0)) && pool.publicSwap &&
-        (tokenPrice.poolTokenId == poolTokenId || poolLiquidity.gt(tokenPrice.poolLiquidity)) &&
-        (
-          (tokenPriceId != WETH.toString() && tokenPriceId != DAI.toString()) ||
-          (pool.tokensCount.equals(BigInt.fromI32(2)) && hasUsdPrice)
-        )
-      ) {
-        tokenPrice.price = ZERO_BD
+          if (poolToken.balance.gt(ZERO_BD)) {
+            tokenPrice.price = poolLiquidity.div(pool.totalWeight).times(poolToken.denormWeight).div(poolToken.balance)
+          }
 
-        if (poolToken.balance.gt(ZERO_BD)) {
-          tokenPrice.price = poolLiquidity.div(pool.totalWeight).times(poolToken.denormWeight).div(poolToken.balance)
+          tokenPrice.symbol = poolToken.symbol
+          tokenPrice.name = poolToken.name
+          tokenPrice.decimals = poolToken.decimals
+          tokenPrice.poolLiquidity = poolLiquidity
+          tokenPrice.poolTokenId = poolTokenId
+          tokenPrice.save()
         }
-
-        tokenPrice.symbol = poolToken.symbol
-        tokenPrice.name = poolToken.name
-        tokenPrice.decimals = poolToken.decimals
-        tokenPrice.poolLiquidity = poolLiquidity
-        tokenPrice.poolTokenId = poolTokenId
-        tokenPrice.save()
       }
     }
   }
@@ -224,14 +237,19 @@ export function updatePoolLiquidity(id: string): void {
     if (tokenPrice !== null) {
       let poolTokenId = id.concat('-').concat(tokenPriceId)
       let poolToken = PoolToken.load(poolTokenId)
-      if (tokenPrice.price.gt(ZERO_BD) && poolToken.denormWeight.gt(denormWeight)) {
-        denormWeight = poolToken.denormWeight
-        liquidity = tokenPrice.price.times(poolToken.balance).div(poolToken.denormWeight).times(pool.totalWeight)
+      if(poolToken != null){
+        if (tokenPrice.price.gt(ZERO_BD) && poolToken.denormWeight.gt(denormWeight)) {
+          denormWeight = poolToken.denormWeight
+          liquidity = tokenPrice.price.times(poolToken.balance).div(poolToken.denormWeight).times(pool.totalWeight)
+        }
       }
     }
   }
 
   let factory = Desyn.load('1')
+
+  if(factory == null) return
+
   factory.totalLiquidity = factory.totalLiquidity.minus(pool.liquidity).plus(liquidity)
   factory.save()
 
@@ -243,6 +261,9 @@ export function updatePoolLiquidity(id: string): void {
 export function decrPoolCount(active: boolean, finalized: boolean, crp: boolean): void {
   if (active) {
     let factory = Desyn.load('1')
+    
+    if(factory == null) return
+
     factory.poolCount = factory.poolCount - 1
     if (finalized) factory.finalizedPoolCount = factory.finalizedPoolCount - 1
     if (crp) factory.crpCount = factory.crpCount - 1
@@ -272,7 +293,6 @@ export function saveTransaction(
   transaction.poolAddress = poolSmartAddress
   transaction.tokenAddress = tokenAddress
   transaction.userAddress = userAddress
-  transaction.gasUsed = event.transaction.gasUsed.toBigDecimal()
   transaction.gasPrice = event.transaction.gasPrice.toBigDecimal()
   transaction.tx = event.transaction.hash
   transaction.timestamp = event.block.timestamp.toI32()

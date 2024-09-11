@@ -20,9 +20,10 @@ export class Desyn extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save Desyn entity without an ID");
     assert(
-      id.kind == ValueKind.STRING,
+      !id || id.kind == ValueKind.STRING,
       "Cannot save Desyn entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
@@ -53,6 +54,7 @@ export class Desyn extends Entity {
 
   get poolCount(): i32 {
     let value = this.get("poolCount");
+    if (value === null) return 0;
     return value.toI32();
   }
 
@@ -62,6 +64,9 @@ export class Desyn extends Entity {
 
   get finalizedPoolCount(): i32 {
     let value = this.get("finalizedPoolCount");
+    if(value === null) {
+      return 0
+    }
     return value.toI32();
   }
 
@@ -71,6 +76,7 @@ export class Desyn extends Entity {
 
   get crpCount(): i32 {
     let value = this.get("crpCount");
+    if (value === null) return 0;
     return value.toI32();
   }
 
@@ -106,6 +112,9 @@ export class Desyn extends Entity {
 
   get totalLiquidity(): BigDecimal {
     let value = this.get("totalLiquidity");
+    if(value === null) {
+      return  BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -140,9 +149,10 @@ export class Pool extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return
     assert(id !== null, "Cannot save Pool entity without an ID");
     assert(
-      id.kind == ValueKind.STRING,
+      !id || id.kind == ValueKind.STRING ,
       "Cannot save Pool entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
@@ -155,6 +165,9 @@ export class Pool extends Entity {
 
   get id(): string {
     let value = this.get("id");
+    if(value === null) {
+      return '';
+    }
     return value.toString();
   }
 
@@ -173,6 +186,9 @@ export class Pool extends Entity {
 
   get publicSwap(): boolean {
     let value = this.get("publicSwap");
+    if(value === null) {
+      return false;
+    }
     return value.toBoolean();
   }
 
@@ -182,6 +198,9 @@ export class Pool extends Entity {
 
   get finalized(): boolean {
     let value = this.get("finalized");
+    if(value === null) {
+      return false;
+    }
     return value.toBoolean();
   }
 
@@ -191,6 +210,7 @@ export class Pool extends Entity {
 
   get crp(): boolean {
     let value = this.get("crp");
+    if (value == null) return false;
     return value.toBoolean();
   }
 
@@ -294,6 +314,9 @@ export class Pool extends Entity {
 
   get active(): boolean {
     let value = this.get("active");
+    if(value === null) {
+      return false;
+    }
     return value.toBoolean();
   }
 
@@ -397,6 +420,9 @@ export class Pool extends Entity {
 
   get totalWeight(): BigDecimal {
     let value = this.get("totalWeight");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -406,6 +432,9 @@ export class Pool extends Entity {
 
   get totalShares(): BigDecimal {
     let value = this.get("totalShares");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -433,6 +462,9 @@ export class Pool extends Entity {
 
   get liquidity(): BigDecimal {
     let value = this.get("liquidity");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -442,6 +474,9 @@ export class Pool extends Entity {
 
   get tokensList(): Array<Bytes> {
     let value = this.get("tokensList");
+    if(value === null) {
+      return new Array<Bytes>(0);
+    }
     return value.toBytesArray();
   }
 
@@ -503,6 +538,9 @@ export class Pool extends Entity {
 
   get tokensCount(): BigInt {
     let value = this.get("tokensCount");
+    if(value === null) {
+      return BigInt.zero();
+    }
     return value.toBigInt();
   }
 
@@ -512,6 +550,9 @@ export class Pool extends Entity {
 
   get holdersCount(): BigInt {
     let value = this.get("holdersCount");
+    if(value === null) {
+      return BigInt.zero();
+    }
     return value.toBigInt();
   }
 
@@ -521,6 +562,9 @@ export class Pool extends Entity {
 
   get joinsCount(): BigInt {
     let value = this.get("joinsCount");
+    if(value === null) {
+      return BigInt.zero();
+    }
     return value.toBigInt();
   }
 
@@ -530,6 +574,9 @@ export class Pool extends Entity {
 
   get exitsCount(): BigInt {
     let value = this.get("exitsCount");
+    if(value === null) {
+      return BigInt.zero();
+    }
     return value.toBigInt();
   }
 
@@ -813,6 +860,7 @@ export class PoolToken extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save PoolToken entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -880,6 +928,9 @@ export class PoolToken extends Entity {
 
   get decimals(): i32 {
     let value = this.get("decimals");
+    if(value === null) {
+      return 0;
+    }
     return value.toI32();
   }
 
@@ -898,6 +949,9 @@ export class PoolToken extends Entity {
 
   get balance(): BigDecimal {
     let value = this.get("balance");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -907,6 +961,9 @@ export class PoolToken extends Entity {
 
   get denormWeight(): BigDecimal {
     let value = this.get("denormWeight");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -923,6 +980,7 @@ export class PoolShare extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save PoolShare entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -965,6 +1023,9 @@ export class PoolShare extends Entity {
 
   get balance(): BigDecimal {
     let value = this.get("balance");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -981,6 +1042,7 @@ export class User extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id === null) return;
     assert(id !== null, "Cannot save User entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -1245,6 +1307,7 @@ export class Transaction extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id === null) return;
     assert(id !== null, "Cannot save Transaction entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -1490,6 +1553,7 @@ export class TokenPrice extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id === null) return;
     assert(id !== null, "Cannot save TokenPrice entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -1557,6 +1621,9 @@ export class TokenPrice extends Entity {
 
   get price(): BigDecimal {
     let value = this.get("price");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -1566,6 +1633,9 @@ export class TokenPrice extends Entity {
 
   get poolLiquidity(): BigDecimal {
     let value = this.get("poolLiquidity");
+    if(value === null) {
+      return BigDecimal.zero();
+    }
     return value.toBigDecimal();
   }
 
@@ -1599,6 +1669,7 @@ export class TokenWhiteList extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save TokenWhiteList entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -1707,6 +1778,7 @@ export class ExcuteList extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save ExcuteList entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -1755,6 +1827,7 @@ export class InvestorList extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save InvestorList entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
@@ -1779,6 +1852,9 @@ export class InvestorList extends Entity {
 
   get poolId(): string {
     let value = this.get("poolId");
+    if(value === null) {
+      return '';
+    }
     return value.toString();
   }
 
@@ -1812,6 +1888,7 @@ export class PoolTokenInitList extends Entity {
 
   save(): void {
     let id = this.get("id");
+    if(id == null) return;
     assert(id !== null, "Cannot save PoolTokenInitList entity without an ID");
     assert(
       id.kind == ValueKind.STRING,

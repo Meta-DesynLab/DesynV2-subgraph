@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Desyn is a non-custodial portfolio manager, liquidity provider, and price sensor.
 repository: https://github.com/DeSyn-Lab/desyn-subgraph
 schema:
@@ -10,10 +10,10 @@ dataSources:
     source:
       address: "0x01a38B39BEddCD6bFEedBA14057E053cBF529cD2"
       abi: Factory
-      startBlock: 17335174
+      startBlock: 18426179
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/factory.ts
       entities:
@@ -32,12 +32,12 @@ dataSources:
     name: RebalanceAdapter
     network: mainnet
     source:
-      address: "0xFa3BE99C256aeB50e96067454eA0c883c830c348"
+      address: "0xe5Ffeb425a2c93A145bAaA4aBaC1a77e48c71068"
       abi: RebalanceAdapter
-      startBlock: 17340296
+      startBlock: 18426306
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/pool.ts
       entities:
@@ -60,7 +60,7 @@ templates:
       abi: Pool
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/pool.ts
       entities:
@@ -113,7 +113,7 @@ templates:
       abi: ConfigurableRightsPool
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/pool.ts
       entities:
