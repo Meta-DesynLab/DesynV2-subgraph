@@ -20,14 +20,14 @@ export class Desyn extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save Desyn entity without an ID");
-    assert(
-      !id || id.kind == ValueKind.STRING,
-      "Cannot save Desyn entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Desyn", id.toString(), this);
+
+    if(id != null) {
+      store.set("Desyn", id.toString(), this);
+    }else{
+      store.set("Desyn", '', this);
+    }
+
+   
   }
 
   static load(id: string): Desyn | null {
@@ -149,14 +149,14 @@ export class Pool extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return
-    assert(id !== null, "Cannot save Pool entity without an ID");
-    assert(
-      !id || id.kind == ValueKind.STRING ,
-      "Cannot save Pool entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Pool", id.toString(), this);
+
+ 
+    if(id != null) {
+      store.set("Pool", id.toString(), this);
+    }else{
+      store.set("Pool", '', this);
+    }
+    
   }
 
   static load(id: string): Pool | null {
@@ -793,13 +793,15 @@ export class EtfStatus extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save EtfStatus entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save EtfStatus entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("EtfStatus", id.toString(), this);
+
+
+    if(id != null) {
+      store.set("EtfStatus", id.toString(), this);
+    }else{
+      store.set("EtfStatus", '', this);
+    }
+
+
   }
 
   static load(id: string): EtfStatus | null {
@@ -860,14 +862,14 @@ export class PoolToken extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save PoolToken entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save PoolToken entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("PoolToken", id.toString(), this);
+
+
+    if(id != null) {
+      store.set("PoolToken", id.toString(), this);
+    }else{
+      store.set("PoolToken", '', this);
+    }
+   
   }
 
   static load(id: string): PoolToken | null {
@@ -980,14 +982,15 @@ export class PoolShare extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save PoolShare entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save PoolShare entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("PoolShare", id.toString(), this);
+   
+  
+    if(id != null) {
+      store.set("PoolShare", id.toString(), this);
+    }else{
+      store.set("PoolShare", '', this);
+    }
+
+    
   }
 
   static load(id: string): PoolShare | null {
@@ -1042,14 +1045,15 @@ export class User extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id === null) return;
-    assert(id !== null, "Cannot save User entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save User entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("User", id.toString(), this);
+
+
+    if(id != null) {
+      store.set("User", id.toString(), this);
+    }else{
+      store.set("User", '', this);
+    };
+
+   
   }
 
   static load(id: string): User | null {
@@ -1125,12 +1129,7 @@ export class Swap extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save Swap entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Swap entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
+  
     store.set("Swap", id.toString(), this);
   }
 
@@ -1307,14 +1306,13 @@ export class Transaction extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id === null) return;
-    assert(id !== null, "Cannot save Transaction entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Transaction entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Transaction", id.toString(), this);
+
+    if(id != null) {
+      store.set("Transaction", id.toString(), this);
+    }else{
+      store.set("Transaction", '', this);
+    };
+   
   }
 
   static load(id: string): Transaction | null {
@@ -1553,14 +1551,14 @@ export class TokenPrice extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id === null) return;
-    assert(id !== null, "Cannot save TokenPrice entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save TokenPrice entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("TokenPrice", id.toString(), this);
+
+    if(id != null) {
+      store.set("TokenPrice", id.toString(), this);
+    }else {
+      store.set("TokenPrice", '', this);
+    }
+
+   
   }
 
   static load(id: string): TokenPrice | null {
@@ -1669,14 +1667,15 @@ export class TokenWhiteList extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save TokenWhiteList entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save TokenWhiteList entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("TokenWhiteList", id.toString(), this);
+
+
+    if(id != null) {
+      store.set("TokenWhiteList", id.toString(), this);
+    }else {
+      store.set("TokenWhiteList", '', this);
+    }
+
+    
   }
 
   static load(id: string): TokenWhiteList | null {
@@ -1778,14 +1777,14 @@ export class ExcuteList extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save ExcuteList entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save ExcuteList entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("ExcuteList", id.toString(), this);
+
+    if(id != null) {
+      store.set("ExcuteList", id.toString(), this);
+    }else {
+      store.set("ExcuteList", '', this);
+    }
+
+   
   }
 
   static load(id: string): ExcuteList | null {
@@ -1827,14 +1826,15 @@ export class InvestorList extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save InvestorList entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save InvestorList entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("InvestorList", id.toString(), this);
+
+
+    if(id != null) {
+      store.set("InvestorList", id.toString(), this);
+    }else {
+      store.set("InvestorList", '', this);
+    }
+
+   
   }
 
   static load(id: string): InvestorList | null {
@@ -1888,14 +1888,10 @@ export class PoolTokenInitList extends Entity {
 
   save(): void {
     let id = this.get("id");
-    if(id == null) return;
-    assert(id !== null, "Cannot save PoolTokenInitList entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save PoolTokenInitList entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
+
+    if(id == null) return
     store.set("PoolTokenInitList", id.toString(), this);
+   
   }
 
   static load(id: string): PoolTokenInitList | null {

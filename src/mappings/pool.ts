@@ -1,4 +1,4 @@
-import { BigInt, Address, Bytes, store } from '@graphprotocol/graph-ts'
+import { BigInt, Address, Bytes, store, log, } from '@graphprotocol/graph-ts'
 import { LOG_CALL, LOG_JOIN, LOG_EXIT, GulpCall } from '../types/templates/Pool/Pool'
 import { Rebalanced } from '../types/templates/RebalanceAdapter/RebalanceAdapter'
 import { Pool as BPool } from '../types/templates/Pool/Pool'
@@ -85,16 +85,47 @@ export function handleSetCrpController(event: OwnershipTransferred): void {
 }
 
 export function handleSetManagerFee(event: SetManagerFee): void {
+  log.debug('managerFee: {}, issueFee: {}, redeemFee: {}, perfermanceFee : {}', [
+    event.params.managerFee.toHexString(),
+    event.params.issueFee.toHexString(),
+    event.params.redeemFee.toHexString(),
+    event.params.perfermanceFee.toHexString()
+  ])
+  log.debug('Block number: {}, block hash: {}, transaction hash: {}, address : {}, addr: {}', [
+    event.block.number.toString(), // "47596000"
+    event.block.hash.toHexString(), // "0x..."
+    event.transaction.hash.toHexString(), // "0x..."
+    event.address.toString(),
+    event.address.toHexString(),
+  ])
+
   let crp = ConfigurableRightsPool.bind(event.address)
-  let pool = Pool.load(getCrpUnderlyingPool(crp)!)!
-
-  pool.managerFee = event.params.managerFee
-  pool.issueFee = event.params.issueFee
-  pool.redeemFee = event.params.redeemFee
-  pool.perfermanceFee = event.params.perfermanceFee
-  pool.save()
-
-  saveTransaction(event, 'SetManagerFee')
+  let bPoolCall = crp.try_bPool()
+  let bPool = bPoolCall.value.toHexString()
+  log.debug('bPool : {}', [
+    bPool
+  ])
+  log.debug('1111111', ['11111'])
+  let pool = Pool.load(bPool)
+  log.debug('222222', ['2222222'])
+  if(pool == null) {
+    log.debug('333333', ['333333'])
+    pool = new Pool(bPool)
+    pool.managerFee = BigInt.zero()
+    pool.issueFee =  BigInt.zero()
+    pool.redeemFee =  BigInt.zero()
+    pool.perfermanceFee =  BigInt.zero()
+    pool.save()
+    
+  }else{
+    log.debug('444444', ['444444'])
+    pool.managerFee = event.params.managerFee
+    pool.issueFee = event.params.issueFee
+    pool.redeemFee = event.params.redeemFee
+    pool.perfermanceFee = event.params.perfermanceFee
+    pool.save()
+  }
+  // saveTransaction(event, 'SetManagerFee')
 }
 
 export function handleSetPublicSwap(event: LOG_CALL): void {

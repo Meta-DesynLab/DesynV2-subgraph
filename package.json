@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Meta-DesynLab/DesynV2-subgraph.git"
@@ -14,7 +12,7 @@
     "@graphprotocol/graph-cli": "^0.67.2",
     "@graphprotocol/graph-ts": "^0.31.0",
     "assemblyscript": "^0.19.0",
-    "matchstick-as": "^0.5.2",
+    "matchstick-as": "0.6.0",
     "typescript": "^4.9.4"
   }
 }

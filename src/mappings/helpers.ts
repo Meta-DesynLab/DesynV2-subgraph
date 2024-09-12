@@ -5,6 +5,7 @@ import {
   Bytes,
   dataSource,
   ethereum,
+  log
 } from '@graphprotocol/graph-ts'
 import {
   Pool,

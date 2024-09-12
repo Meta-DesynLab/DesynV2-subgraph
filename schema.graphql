@@ -4,7 +4,7 @@ type Desyn @entity {
     poolCount: Int!                                     # Number of pools
     finalizedPoolCount: Int!                            # Number of finalized pools
     crpCount: Int!                                      # Number of CRP
-    pools: [Pool!] @derivedFrom(field: "factoryID")
+    pools: [Pool!]! @derivedFrom(field: "factoryID")
     txCount: BigInt!                                    # Number of txs
     totalLiquidity: BigDecimal!                         # All the pools liquidity value in USD
     totalSwapVolume: BigDecimal!                        # All the swap volume in USD
