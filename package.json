@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ test2",
+    "create-local": "graph create --node http://localhost:8020/ test2",
+    "remove-local": "graph remove --node http://localhost:8020/ test2",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 test2",
+    "test": "graph test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Meta-DesynLab/DesynV2-subgraph.git"
