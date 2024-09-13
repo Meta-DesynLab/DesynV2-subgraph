@@ -102,14 +102,10 @@ export function handleSetManagerFee(event: SetManagerFee): void {
   let crp = ConfigurableRightsPool.bind(event.address)
   let bPoolCall = crp.try_bPool()
   let bPool = bPoolCall.value.toHexString()
-  log.debug('bPool : {}', [
-    bPool
-  ])
-  log.debug('1111111', ['11111'])
+ 
   let pool = Pool.load(bPool)
-  log.debug('222222', ['2222222'])
+
   if(pool == null) {
-    log.debug('333333', ['333333'])
     pool = new Pool(bPool)
     pool.managerFee = BigInt.zero()
     pool.issueFee =  BigInt.zero()
@@ -118,14 +114,13 @@ export function handleSetManagerFee(event: SetManagerFee): void {
     pool.save()
     
   }else{
-    log.debug('444444', ['444444'])
     pool.managerFee = event.params.managerFee
     pool.issueFee = event.params.issueFee
     pool.redeemFee = event.params.redeemFee
     pool.perfermanceFee = event.params.perfermanceFee
     pool.save()
   }
-  // saveTransaction(event, 'SetManagerFee')
+  saveTransaction(event, 'SetManagerFee')
 }
 
 export function handleSetPublicSwap(event: LOG_CALL): void {
@@ -332,11 +327,10 @@ export function handleRebalanced(event: Rebalanced): void {
 
   let addressA = event.params.token0.toHexString()
   let poolTokenAId = poolId.concat('-').concat(addressA)
-  let poolTokenA = PoolToken.load(poolTokenAId)!
+  let poolTokenA = PoolToken.load(poolTokenAId)
 
   if (poolTokenA == null) {
-    createPoolTokenEntity(poolTokenAId, poolId, addressA)
-    poolTokenA = PoolToken.load(poolTokenAId)!
+    return
   }else{
     poolTokenA.denormWeight = bigIntToDecimal(newWeight0, 18)
     poolTokenA.balance =  bigIntToDecimal(newBalance0, poolTokenA.decimals)
@@ -345,14 +339,10 @@ export function handleRebalanced(event: Rebalanced): void {
 
   let addressB = event.params.token1.toHexString()
   let poolTokenBId = poolId.concat('-').concat(addressB)
-  let poolTokenB = PoolToken.load(poolTokenBId)!
+  let poolTokenB = PoolToken.load(poolTokenBId)
 
   if (poolTokenB == null) {
-    createPoolTokenEntity(poolTokenBId, poolId, addressB)
-    poolTokenB = PoolToken.load(poolTokenBId)!
-    poolTokenB.denormWeight =  bigIntToDecimal(newWeight1, 18)
-    poolTokenB.balance =  bigIntToDecimal(newBalance1, poolTokenB.decimals)
-    poolTokenB.save()
+    return
   }else{
     poolTokenB.denormWeight =  bigIntToDecimal(newWeight1, 18)
     poolTokenB.balance =  bigIntToDecimal(newBalance1, poolTokenB.decimals)
@@ -383,7 +373,7 @@ export function handleRebind(event: LOG_CALL): void {
   let denormWeight = hexToDecimal(event.params.data.toHexString().slice(138), 18)
 
   let poolTokenId = poolId.concat('-').concat(address.toHexString())
-  let poolToken = PoolToken.load(poolTokenId)!
+  let poolToken = PoolToken.load(poolTokenId)
 
   if (poolToken == null) {
     return
