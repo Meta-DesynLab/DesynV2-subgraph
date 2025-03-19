@@ -1,6 +1,6 @@
 specVersion: 0.0.4
 description: Desyn is a non-custodial portfolio manager, liquidity provider, and price sensor.
-repository: https://github.com/DeSyn-Lab/desyn-subgraph
+repository: https://github.com/Meta-DesynLab/DesynV2-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
